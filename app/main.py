@@ -23,6 +23,7 @@ def upload_file():
             file.save(upload_path)
             print(f"Uploaded Path: {upload_path}")
 
+            # Enhance the image
             enhanced_image = enhance_image(upload_path)
             enhanced_image.save(processed_path)
             print(f"Processed Path: {processed_path}")

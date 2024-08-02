@@ -98,6 +98,7 @@
             <input type="submit" value="Enhance Photo">
         </form>
         <button id="download-button" onclick="window.location.href=document.getElementById('download-button').getAttribute('data-url')">Download Processed Image</button>
+        <div id="status-message"></div>
         <div class="footer">
             <p>&copy; 2024 Photo Enhancer. All rights reserved.</p>
         </div>
@@ -108,6 +109,8 @@
             event.preventDefault(); // Prevent default form submission
 
             const formData = new FormData(this);
+            const statusMessage = document.getElementById('status-message');
+            
             fetch('/upload', {
                 method: 'POST',
                 body: formData
@@ -115,16 +118,17 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    alert('Error: ' + data.error);
+                    statusMessage.textContent = 'Error: ' + data.error;
                 } else {
                     // Show download button and set URL
                     const downloadButton = document.getElementById('download-button');
                     downloadButton.style.display = 'inline-block';
                     downloadButton.setAttribute('data-url', data.url);
+                    statusMessage.textContent = 'Photo enhanced successfully! Click the button to download.';
                 }
             })
             .catch(error => {
-                alert('An error occurred: ' + error);
+                statusMessage.textContent = 'An error occurred: ' + error;
             });
         });
     </script>
